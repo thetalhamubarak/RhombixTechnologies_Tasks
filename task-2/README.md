@@ -1,30 +1,25 @@
-# Talha Mubarak — Portfolio
+# To-Do List
 
-A personal portfolio site styled as a code editor — sidebar file tree, tabs, syntax-highlighted content, and a boot-sequence intro. Built for the Rhombix Technologies Web Development internship (Task 1).
+A simple to-do list app — add, edit, delete, and check off tasks. Built for the Rhombix Technologies Web Development internship (Task 2).
 
+## Features
 
-## Preview
-
-The site opens with a short `npm run dev` boot animation, then loads an editor UI. Each "file" in the sidebar is a section of the portfolio:
-
-| File | Section |
-|---|---|
-| `about.js` | Introduction & background |
-| `projects.js` | Featured projects |
-| `skills.json` | Technical skills |
-| `experience.md` | Work experience |
-| `contact.txt` | Contact details |
+- Add tasks
+- Edit tasks inline
+- Delete tasks
+- Mark tasks complete
+- Tasks persist via `localStorage`
 
 ## Tech Stack
 
 - HTML5
-- CSS3 (custom properties, no framework)
+- CSS3
 - Vanilla JavaScript (no dependencies)
 
 ## File Structure
 
 ```
-portfolio/
+todo-app/
 ├── index.html
 ├── styles.css
 └── script.js
@@ -35,8 +30,8 @@ portfolio/
 No build step needed — it's a static site.
 
 ```bash
-git clone https://github.com/thetalhamubarak/portfolio.git
-cd portfolio
+git clone https://github.com/thetalhamubarak/todo-app.git
+cd todo-app
 open index.html
 ```
 

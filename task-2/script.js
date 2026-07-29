@@ -1,60 +1,78 @@
-const files = [
-  { key: "about",      label: "about.js",      dot: "dot-js",   lang: "JavaScript" },
-  { key: "projects",   label: "projects.js",   dot: "dot-js",   lang: "JavaScript" },
-  { key: "skills",     label: "skills.json",   dot: "dot-json", lang: "JSON" },
-  { key: "experience", label: "experience.md", dot: "dot-md",   lang: "Markdown" },
-  { key: "contact",    label: "contact.txt",   dot: "dot-txt",  lang: "Plain Text" },
-];
+const STORAGE_KEY = "todo-tasks";
+let tasks = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
 
-const fileTree = document.getElementById('fileTree');
-const tabsBar = document.getElementById('tabsBar');
+const taskList = document.getElementById("taskList");
+const taskForm = document.getElementById("taskForm");
+const taskInput = document.getElementById("taskInput");
+const activeCount = document.getElementById("activeCount");
+const emptyState = document.getElementById("emptyState");
 
-files.forEach(f => {
-  fileTree.insertAdjacentHTML('beforeend',
-    `<li data-file="${f.key}"><span class="${f.dot}"></span>${f.label}</li>`);
-  tabsBar.insertAdjacentHTML('beforeend',
-    `<div class="tab" data-file="${f.key}"><span class="${f.dot}"></span>${f.label}<span class="tab-x">×</span></div>`);
-});
-
-function openFile(key) {
-  const f = files.find(x => x.key === key);
-  document.querySelectorAll('.file-tree li, .tab').forEach(el =>
-    el.classList.toggle('active', el.dataset.file === key));
-  document.querySelectorAll('.pane').forEach(el =>
-    el.classList.toggle('active', el.dataset.file === key));
-  document.getElementById('crumbFile').textContent = f.label;
-  document.getElementById('statusFile').textContent = f.label;
-  document.getElementById('statusLang').textContent = f.lang;
+function save() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
 }
 
-document.body.addEventListener('click', e => {
-  const item = e.target.closest('[data-file]');
-  if (item) openFile(item.dataset.file);
+function render() {
+  taskList.innerHTML = tasks.map(t => `
+    <li class="task-item ${t.completed ? "completed" : ""}" data-id="${t.id}">
+      <span class="task-check"></span>
+      <span class="task-text" contenteditable="false">${t.text}</span>
+      <div class="task-actions">
+        <button class="icon-btn edit" title="Edit">✎</button>
+        <button class="icon-btn delete" title="Delete">🗑</button>
+      </div>
+    </li>
+  `).join("");
+
+  activeCount.textContent = tasks.filter(t => !t.completed).length;
+  emptyState.classList.toggle("show", tasks.length === 0);
+  save();
+}
+
+taskForm.addEventListener("submit", e => {
+  e.preventDefault();
+  const text = taskInput.value.trim();
+  if (!text) return;
+  tasks.push({ id: Date.now(), text, completed: false });
+  taskInput.value = "";
+  render();
 });
 
-openFile('about');
+taskList.addEventListener("click", e => {
+  const item = e.target.closest(".task-item");
+  if (!item) return;
+  const id = Number(item.dataset.id);
+  const task = tasks.find(t => t.id === id);
 
-const bootLines = [
-  "$ npm install talha-portfolio",
-  "  added 5 packages in 0.6s",
-  "$ npm run dev",
-  "  ✓ ready in 214ms",
-];
-const bootEl = document.getElementById('bootLines');
-const bootScreen = document.getElementById('boot');
-
-bootLines.forEach((line, i) => {
-  setTimeout(() => {
-    bootEl.textContent += (i ? "\n" : "") + line;
-    if (i === bootLines.length - 1) setTimeout(() => bootScreen.classList.add('hide'), 350);
-  }, i * 260);
+  if (e.target.classList.contains("task-check")) {
+    task.completed = !task.completed;
+    render();
+  } else if (e.target.classList.contains("delete")) {
+    tasks = tasks.filter(t => t.id !== id);
+    render();
+  } else if (e.target.classList.contains("edit")) {
+    const span = item.querySelector(".task-text");
+    span.contentEditable = "true";
+    span.focus();
+    document.getSelection().selectAllChildren(span);
+  }
 });
-bootScreen.addEventListener('click', () => bootScreen.classList.add('hide'));
 
-const clock = document.getElementById('clock');
-const tick = () => {
-  const d = new Date();
-  clock.textContent = `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
-};
-tick();
-setInterval(tick, 30000);
+taskList.addEventListener("blur", e => {
+  if (!e.target.classList.contains("task-text")) return;
+  const item = e.target.closest(".task-item");
+  const id = Number(item.dataset.id);
+  const task = tasks.find(t => t.id === id);
+  const newText = e.target.textContent.trim();
+  task.text = newText || task.text;
+  e.target.contentEditable = "false";
+  render();
+}, true);
+
+taskList.addEventListener("keydown", e => {
+  if (e.target.classList.contains("task-text") && e.key === "Enter") {
+    e.preventDefault();
+    e.target.blur();
+  }
+});
+
+render();

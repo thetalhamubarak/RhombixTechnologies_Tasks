@@ -3,162 +3,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>talha-mubarak — VS Code</title>
-<meta name="description" content="Talha Mubarak — Computer Science student and full-stack developer.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<title>To-Do List</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<div id="boot">
-  <div id="bootLines"></div>
-</div>
+<main class="app">
+  <h1>To-Do List</h1>
 
-<div class="ide" id="ide">
+  <form id="taskForm" class="task-form">
+    <input id="taskInput" type="text" placeholder="What do you need to do?" autocomplete="off" required>
+    <button type="submit">Add</button>
+  </form>
 
-  <div class="titlebar">
-    <div class="dots"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div>
-    <span class="titlebar-text">talha-mubarak — portfolio — Visual Studio Code</span>
-  </div>
+  <ul id="taskList" class="task-list"></ul>
 
-  <div class="body">
-
-    <div class="activitybar">
-      <span class="abicon active">📁</span>
-      <span class="abicon">🔍</span>
-      <span class="abicon">⎇</span>
-      <span class="abicon">▷</span>
-    </div>
-
-    <aside class="sidebar">
-      <p class="sidebar-title">EXPLORER</p>
-      <p class="folder-name">▾ talha-mubarak</p>
-      <ul class="file-tree" id="fileTree"></ul>
-    </aside>
-
-    <main class="editor">
-
-      <div class="tabs" id="tabsBar"></div>
-
-      <div class="breadcrumb">talha-mubarak <span class="crumb-sep">›</span> <span id="crumbFile">about.js</span></div>
-
-      <div class="pane-wrap">
-
-        <pre class="pane active" data-file="about"><code><span class="ln"></span><span class="com">// about.js</span>
-<span class="ln"></span><span class="com">// who's writing this code</span>
-<span class="ln"></span>
-<span class="ln"></span><span class="kw">import</span> { university, city } <span class="kw">from</span> <span class="str">"./education.js"</span>;
-<span class="ln"></span>
-<span class="ln"></span><span class="kw">const</span> <span class="var">talha</span> = {
-<span class="ln"></span>  <span class="prop">name</span>: <span class="str">"Talha Mubarak"</span>,
-<span class="ln"></span>  <span class="prop">role</span>: <span class="str">"Full-stack Developer, CS Student"</span>,
-<span class="ln"></span>  <span class="prop">semester</span>: <span class="num">4</span>,
-<span class="ln"></span>  <span class="prop">location</span>: <span class="str">"Multan, Punjab, PK"</span>,
-<span class="ln"></span>  <span class="prop">university</span>: <span class="str">"COMSATS University Islamabad, Vehari Campus"</span>,
-<span class="ln"></span>  <span class="prop">timeline</span>: <span class="str">"Sept 2024 – June 2028 (expected)"</span>,
-<span class="ln"></span>
-<span class="ln"></span>  <span class="prop">bio</span>: <span class="fn">() =></span> {
-<span class="ln"></span>    <span class="kw">return</span> <span class="str">`I learn by building — turning what I study
-<span class="ln"></span>      into real, working software instead of
-<span class="ln"></span>      stopping at theory. My work spans crypto
-<span class="ln"></span>      tools, e-commerce UIs, and automation.`</span>;
-<span class="ln"></span>  },
-<span class="ln"></span>};
-<span class="ln"></span>
-<span class="ln"></span><span class="kw">export</span> <span class="kw">default</span> <span class="var">talha</span>;
-<span class="ln"></span></code></pre>
-
-        <pre class="pane" data-file="projects"><code><span class="ln"></span><span class="com">// projects.js</span>
-<span class="ln"></span><span class="com">// things I built solo, end to end</span>
-<span class="ln"></span>
-<span class="ln"></span><span class="kw">const</span> <span class="var">projects</span> = [
-<span class="ln"></span>  {
-<span class="ln"></span>    <span class="prop">name</span>: <span class="str">"Cipherbench"</span>,
-<span class="ln"></span>    <span class="prop">stack</span>: [<span class="str">"Python"</span>, <span class="str">"Flask"</span>, <span class="str">"PyCryptodome"</span>],
-<span class="ln"></span>    <span class="prop">desc</span>: <span class="str">"Crypto workbench — Caesar, AES, SHA-256,
-<span class="ln"></span>            LSB steganography via a Flask API."</span>,
-<span class="ln"></span>    <span class="prop">demo</span>: <a class="lnk" href="https://thetalhamubarak.github.io/Cipher-bench/" target="_blank" rel="noopener"><span class="str">"thetalhamubarak.github.io/Cipher-bench"</span></a>,
-<span class="ln"></span>  },
-<span class="ln"></span>  {
-<span class="ln"></span>    <span class="prop">name</span>: <span class="str">"NESCAFÉ Atelier"</span>,
-<span class="ln"></span>    <span class="prop">stack</span>: [<span class="str">"HTML"</span>, <span class="str">"CSS"</span>, <span class="str">"JavaScript"</span>],
-<span class="ln"></span>    <span class="prop">desc</span>: <span class="str">"Coffee storefront — catalog filters, cart
-<span class="ln"></span>            logic, taste quiz, full checkout flow."</span>,
-<span class="ln"></span>    <span class="prop">demo</span>: <a class="lnk" href="https://thetalhamubarak.github.io/Nescafe-Atelier-Store/" target="_blank" rel="noopener"><span class="str">"thetalhamubarak.github.io/Nescafe-Atelier"</span></a>,
-<span class="ln"></span>  },
-<span class="ln"></span>  {
-<span class="ln"></span>    <span class="prop">name</span>: <span class="str">"AI LinkedIn Autoposter"</span>,
-<span class="ln"></span>    <span class="prop">stack</span>: [<span class="str">"n8n"</span>, <span class="str">"Automation"</span>],
-<span class="ln"></span>    <span class="prop">desc</span>: <span class="str">"Scrapes Reddit / HN / Dev.to, drafts
-<span class="ln"></span>            and posts LinkedIn content via AI."</span>,
-<span class="ln"></span>    <span class="prop">demo</span>: <a class="lnk" href="https://thetalhamubarak.github.io/LinkedIn-Autoposter-AI/" target="_blank" rel="noopener"><span class="str">"thetalhamubarak.github.io/Autoposter-AI"</span></a>,
-<span class="ln"></span>  },
-<span class="ln"></span>  {
-<span class="ln"></span>    <span class="prop">name</span>: <span class="str">"Amazon Shopping Clone"</span>,
-<span class="ln"></span>    <span class="prop">stack</span>: [<span class="str">"HTML"</span>, <span class="str">"CSS"</span>],
-<span class="ln"></span>    <span class="prop">desc</span>: <span class="str">"Static homepage clone — first project,
-<span class="ln"></span>            first bug hunt (Back to Top button)."</span>,
-<span class="ln"></span>    <span class="prop">demo</span>: <a class="lnk" href="https://thetalhamubarak.github.io/Amazon-Shopping-clone/" target="_blank" rel="noopener"><span class="str">"thetalhamubarak.github.io/Amazon-clone"</span></a>,
-<span class="ln"></span>  },
-<span class="ln"></span>  {
-<span class="ln"></span>    <span class="prop">name</span>: <span class="str">"Responsive Login Page"</span>,
-<span class="ln"></span>    <span class="prop">stack</span>: [<span class="str">"HTML"</span>, <span class="str">"CSS"</span>],
-<span class="ln"></span>    <span class="prop">desc</span>: <span class="str">"Responsive login UI, animated blobs,
-<span class="ln"></span>            social sign-in buttons."</span>,
-<span class="ln"></span>    <span class="prop">demo</span>: <a class="lnk" href="https://thetalhamubarak.github.io/Responsive-Login-Page/" target="_blank" rel="noopener"><span class="str">"thetalhamubarak.github.io/Login-Page"</span></a>,
-<span class="ln"></span>  },
-<span class="ln"></span>];
-<span class="ln"></span>
-<span class="ln"></span><span class="kw">export</span> <span class="kw">default</span> <span class="var">projects</span>;
-<span class="ln"></span></code></pre>
-
-        <pre class="pane" data-file="skills"><code><span class="ln"></span>{
-<span class="ln"></span>  <span class="prop">"languages"</span>: [<span class="str">"HTML/CSS"</span>, <span class="str">"JavaScript"</span>, <span class="str">"Java"</span>, <span class="str">"Python"</span>, <span class="str">"C++"</span>, <span class="str">"SQL"</span>],
-<span class="ln"></span>  <span class="prop">"frameworks"</span>: [<span class="str">"Flask"</span>, <span class="str">"React"</span>, <span class="str">"Node.js"</span>],
-<span class="ln"></span>  <span class="prop">"tools"</span>: [<span class="str">"Git"</span>, <span class="str">"GitHub"</span>, <span class="str">"n8n"</span>, <span class="str">"VS Code"</span>, <span class="str">"Figma"</span>],
-<span class="ln"></span>  <span class="prop">"concepts"</span>: [<span class="str">"Responsive Design"</span>, <span class="str">"REST APIs"</span>, <span class="str">"OOP"</span>, <span class="str">"MVC"</span>]
-<span class="ln"></span>}
-<span class="ln"></span></code></pre>
-
-        <pre class="pane" data-file="experience"><code><span class="ln"></span><span class="md-h"># Experience</span>
-<span class="ln"></span>
-<span class="ln"></span><span class="md-h2">## Web Development Trainee</span>
-<span class="ln"></span><span class="com">Rhombix Technologies · Lahore (Remote)</span>
-<span class="ln"></span>
-<span class="ln"></span>Structured web development training and certification
-<span class="ln"></span>track — hands-on tasks across HTML, CSS, JavaScript,
-<span class="ln"></span>and modern front-end frameworks.
-<span class="ln"></span>
-<span class="ln"></span><span class="com">- [x] Task 1: Personal portfolio (this site)</span>
-<span class="ln"></span><span class="com">- [ ] Task 2: in progress</span>
-<span class="ln"></span></code></pre>
-
-        <pre class="pane" data-file="contact"><code><span class="ln"></span><span class="com"># reach out</span>
-<span class="ln"></span>
-<span class="ln"></span>EMAIL   <a class="lnk" href="mailto:talhamubarak96@gmail.com">talhamubarak96@gmail.com</a>
-<span class="ln"></span>PHONE   <a class="lnk" href="tel:+923267716149">+92 326 7716149</a>
-<span class="ln"></span>GITHUB  <a class="lnk" href="https://github.com/thetalhamubarak" target="_blank" rel="noopener">github.com/thetalhamubarak</a>
-<span class="ln"></span>LINKEDIN <a class="lnk" href="https://www.linkedin.com/in/talhamubarak96/" target="_blank" rel="noopener">linkedin.com/in/talhamubarak96</a>
-<span class="ln"></span>LOCATION Multan, Punjab, Pakistan
-<span class="ln"></span>
-<span class="ln"></span><span class="com">$</span> <span class="cursor-blink">open to internships &amp; collabs_</span>
-<span class="ln"></span></code></pre>
-
-      </div>
-    </main>
-  </div>
-
-  <div class="statusbar">
-    <span>⎇ main*</span>
-    <span id="statusFile">about.js</span>
-    <span class="spacer"></span>
-    <span>UTF-8</span>
-    <span id="statusLang">JavaScript</span>
-    <span id="clock">--:--</span>
-  </div>
-
-</div>
+  <p id="emptyState" class="empty-state">No tasks yet. Add one above.</p>
+  <p class="count"><span id="activeCount">0</span> left</p>
+</main>
 
 <script src="script.js"></script>
 </body>
